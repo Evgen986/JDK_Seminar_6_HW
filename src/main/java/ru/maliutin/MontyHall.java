@@ -1,6 +1,8 @@
 package ru.maliutin;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -24,6 +26,7 @@ public class MontyHall {
     public void game(int countRound){
         int countWinner = 0;
         int changeChoice = 0;
+        HashMap<Integer, String> resultGame = new HashMap<>();
         for (int i = 0; i < countRound; i++) {
             System.out.println("Начинается раунд " + (i + 1));
             int chooseGamer = random.nextInt(0, door.length);
@@ -44,14 +47,21 @@ public class MontyHall {
             }
             if (isWinner(chooseGamer)){
                 countWinner++;
+                resultGame.put(i + 1, "car");
                 System.out.println("АААА-ВТОМОБИЛЬ!!! Поздравляем игрока!");
             }else{
                 System.out.println("КОЗ-ААА!!! Поздравляем игрока, кило капусты в подарок!");
+                resultGame.put(i + 1, "goat");
             }
             System.out.println();
         }
         System.out.printf("\nИгрок смог выиграть автомобиль %d раз(а)\n", countWinner);
-        System.out.printf("Игрок менял свой выбор %d раз(а)\n", changeChoice);
+        System.out.print("Игрок выиграл в раундах: ");
+        for(Map.Entry<Integer, String> round : resultGame.entrySet()){
+            if (round.getValue().equals("car"))
+                System.out.print(round.getKey() + " ");
+        }
+        System.out.printf("\nИгрок менял свой выбор %d раз(а)\n", changeChoice);
     }
 
     /**
